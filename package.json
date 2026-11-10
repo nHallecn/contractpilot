@@ -1,0 +1,14 @@
+{
+  "name": "contractpilot",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "test": "node --test",
+    "benchmark": "node scripts/benchmark.js",
+    "check": "npm run test && npm run benchmark"
+  }
+}
