@@ -30,3 +30,9 @@ See [architecture and safety decisions](docs/DECISIONS.md).
 ## Contribution workflow
 
 All changes go through feature branches and pull requests. Never commit features directly to main.
+
+## Milestone 2 — live HTTP verification
+
+Run `npm run benchmark:http` to start a trusted local payment API on an ephemeral loopback port and perform an actual HTTP POST. The benchmark compares a deliberately broken implementation (200), a checked-in corrected implementation (201 with `paymentId`), and a negative control (201 without `paymentId`). It records response status, content type and SHA-256 evidence, and uses the same OpenAPI verifier for all three.
+
+`npm run check` now includes both the original synthetic benchmark and the new HTTP benchmark. Read [Milestone 2 boundaries](docs/MILESTONE_2.md): **no AI-generated fix, external repo execution, or untrusted code sandbox is claimed yet.**
