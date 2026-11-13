@@ -10,6 +10,7 @@
     "test": "node --test",
     "benchmark": "node scripts/benchmark.js",
     "check": "npm run test && npm run benchmark && npm run benchmark:http",
-    "benchmark:http": "node scripts/http-benchmark.js"
+    "benchmark:http": "node scripts/http-benchmark.js",
+    "benchmark:repair": "node scripts/repair-benchmark.js"
   }
 }

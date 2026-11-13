@@ -36,3 +36,11 @@ All changes go through feature branches and pull requests. Never commit features
 Run `npm run benchmark:http` to start a trusted local payment API on an ephemeral loopback port and perform an actual HTTP POST. The benchmark compares a deliberately broken implementation (200), a checked-in corrected implementation (201 with `paymentId`), and a negative control (201 without `paymentId`). It records response status, content type and SHA-256 evidence, and uses the same OpenAPI verifier for all three.
 
 `npm run check` now includes both the original synthetic benchmark and the new HTTP benchmark. Read [Milestone 2 boundaries](docs/MILESTONE_2.md): **no AI-generated fix, external repo execution, or untrusted code sandbox is claimed yet.**
+
+## Milestone 3 — controlled test-and-patch loop
+
+The new `npm run benchmark:repair` command stages a **checked-in payment API source file**, verifies it over real HTTP inside a network-disabled Docker container, applies an exact-source-hash-guarded **hand-reviewed patch**, and runs the same oracle against the modified source in another container.
+
+Run `npm run check` for the existing unit and HTTP tests, and `npm run benchmark:repair` separately on a machine with Docker and the `node:22-alpine` image. GitHub Actions runs both jobs.
+
+**Not yet supported:** AI-generated patches, arbitrary or hostile repositories, production-grade isolation, GitHub PR creation by the app, or Jira/Rovo. See [Milestone 3 security notes](docs/MILESTONE_3.md).
