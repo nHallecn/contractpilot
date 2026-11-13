@@ -1,4 +1,4 @@
-import { mkdtemp, mkdir, readFile, writeFile, copyFile, rm } from 'node:fs/promises';
+import { mkdtemp, mkdir, chmod, readFile, writeFile, copyFile, rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { resolve, join, dirname } from 'node:path';
 import { execFileSync } from 'node:child_process';
@@ -15,7 +15,7 @@ const digest = text => createHash('sha256').update(text).digest('hex');
 async function validateCandidate(label, code) {
   const stage = await mkdtemp(join(tmpdir(), 'contractpilot-'));
   try {
-    await mkdir(join(stage, 'src'));
+    // mkdtemp defaults to 0700; make read-only traversal possible for container UID 10001.\n    await chmod(stage, 0o755);\n    await mkdir(join(stage, 'src'), { mode: 0o755 });
     await writeFile(join(stage, 'package.json'), '{"type":"module"}\n');
     await writeFile(join(stage, 'src/payment.mjs'), code);
     const copy = async (from, to) => copyFile(join(root, from), join(stage, to));
