@@ -3,14 +3,27 @@ on:
   push:
     branches: [main]
   pull_request:
+permissions:
+  contents: read
 jobs:
   test:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
       - run: npm run check
+
+  restricted-repair-demo:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Pull pinned-to-workflow base image tag (trusted fixture only)
+        run: docker pull node:22-alpine
+      - name: Run baseline and reviewed patch in network-disabled containers
+        run: npm run benchmark:repair
