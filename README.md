@@ -44,3 +44,9 @@ The new `npm run benchmark:repair` command stages a **checked-in payment API sou
 Run `npm run check` for the existing unit and HTTP tests, and `npm run benchmark:repair` separately on a machine with Docker and the `node:22-alpine` image. GitHub Actions runs both jobs.
 
 **Not yet supported:** AI-generated patches, arbitrary or hostile repositories, production-grade isolation, GitHub PR creation by the app, or Jira/Rovo. See [Milestone 3 security notes](docs/MILESTONE_3.md).
+
+## Repair proposal boundary (Milestone 4, partial)
+
+A model callback can now propose a single-line replacement of the approved example API source. The host controls the source hash, file destination, and oracle; a proposed change is returned as **AWAITING_HUMAN_APPROVAL** and is never executed or committed by the agent. Invalid, hallucinated, multiline and out-of-scope proposal forms are rejected.
+
+This is an interface with mocked model responses in tests, **not yet a live AI integration**. The same PR also corrects an M3 worker staging syntax bug discovered after PR #3 was merged despite its Docker CI failure. See [Milestone 4](docs/MILESTONE_4.md).
