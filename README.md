@@ -50,3 +50,11 @@ Run `npm run check` for the existing unit and HTTP tests, and `npm run benchmark
 A model callback can now propose a single-line replacement of the approved example API source. The host controls the source hash, file destination, and oracle; a proposed change is returned as **AWAITING_HUMAN_APPROVAL** and is never executed or committed by the agent. Invalid, hallucinated, multiline and out-of-scope proposal forms are rejected.
 
 This is an interface with mocked model responses in tests, **not yet a live AI integration**. The same PR also corrects an M3 worker staging syntax bug discovered after PR #3 was merged despite its Docker CI failure. See [Milestone 4](docs/MILESTONE_4.md).
+
+## Milestone 5 — live model proposal adapter (opt-in)
+
+A provider adapter now supports the OpenAI Responses API. It may request **one exact source-line replacement** for the checked-in example payment API, using contract-failure evidence. The model cannot select a file, change the verification oracle, run code or commit a patch.
+
+To request a real model proposal locally, configure `OPENAI_API_KEY`, `CONTRACTPILOT_MODEL`, and `CONTRACTPILOT_SEND_DEMO_SOURCE=yes`, then run `npm run propose:live`. This sends the **example source** to the configured provider. Do not set this flag for confidential projects. No API key or live model call is required for CI.
+
+A successful request returns `AWAITING_HUMAN_APPROVAL` and `verification: NOT_RUN`; it is **not** evidence of an independently validated repair. The automated tests use a mocked provider response, not a real model. See [M5 scope and controls](docs/MILESTONE_5.md).
