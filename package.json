@@ -11,6 +11,7 @@
     "benchmark": "node scripts/benchmark.js",
     "check": "npm run test && npm run benchmark && npm run benchmark:http",
     "benchmark:http": "node scripts/http-benchmark.js",
-    "benchmark:repair": "node scripts/repair-benchmark.js"
+    "benchmark:repair": "node scripts/repair-benchmark.js",
+    "propose:live": "node scripts/propose-repair.js"
   }
 }
