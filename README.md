@@ -58,3 +58,11 @@ A provider adapter now supports the OpenAI Responses API. It may request **one e
 To request a real model proposal locally, configure `OPENAI_API_KEY`, `CONTRACTPILOT_MODEL`, and `CONTRACTPILOT_SEND_DEMO_SOURCE=yes`, then run `npm run propose:live`. This sends the **example source** to the configured provider. Do not set this flag for confidential projects. No API key or live model call is required for CI.
 
 A successful request returns `AWAITING_HUMAN_APPROVAL` and `verification: NOT_RUN`; it is **not** evidence of an independently validated repair. The automated tests use a mocked provider response, not a real model. See [M5 scope and controls](docs/MILESTONE_5.md).
+
+## Milestone 6 — approved model proposal verification
+
+The new approval gate reconstitutes a model proposal from the exact trusted source revision, checks the candidate SHA-256 against an **explicitly approved** value, then runs both baseline and candidate in the existing restricted example Docker worker. The independent OpenAPI oracle must see the expected baseline violation and a passing candidate; otherwise the result is REJECTED.
+
+`npm run benchmark:approved` exercises this loop in CI with a **mocked model reply and simulated approval**. To try a real provider, run `npm run propose:live > proposal.json`, inspect the proposed code, and then set `CONTRACTPILOT_APPROVE_EXECUTION=yes` plus `CONTRACTPILOT_APPROVED_CANDIDATE_SHA256` before `npm run verify:approved`. Both commands are limited to the checked-in demo example. See [M6 instructions and security limitations](docs/MILESTONE_6.md).
+
+**Not yet implemented:** real-model success benchmark, hardened execution for arbitrary repositories, automated PR creation, or Atlassian Forge/Rovo integration.
