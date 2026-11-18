@@ -27,3 +27,5 @@ jobs:
         run: docker pull node:22-alpine
       - name: Run baseline and reviewed patch in network-disabled containers
         run: npm run benchmark:repair
+      - name: Verify approved mocked proposal via independent Docker oracle
+        run: npm run benchmark:approved
